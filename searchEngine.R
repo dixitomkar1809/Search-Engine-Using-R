@@ -15,10 +15,18 @@ names(plot.text.list) <- df_title$doc_id
 
 searchString <- "Thriller Brad Pitt"
 
-corpus <- VCorpus(c(plot.text.list, searchString))
+documents <- VectorSource(c(plot.text.list, searchString))
+documents$Names <- c(names(plot.text.list), "searchString")
+
+corpus <- Corpus(documents)
 
 cleanCorpus <- tm_map(corpus, stripWhitespace)
+cleanCorpus <- tm_map(cleanCorpus, tolower)
 cleanCorpus <- tm_map(cleanCorpus, removeWords, stopwords("english"))
 cleanCorpus <- tm_map(cleanCorpus, stemDocument)
 cleanCorpus <- tm_map(cleanCorpus, removePunctuation)
 cleanCorpus <- tm_map(cleanCorpus, removeNumbers)
+
+dtm <- DocumentTermMatrix(cleanCorpus)
+
+dtm.tf_idf <- weightTfIdf(dtm)
