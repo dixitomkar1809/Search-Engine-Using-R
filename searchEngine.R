@@ -12,7 +12,7 @@ plot.text.list <- as.list(as.character(df_title$text))
 no.plot.text.list <- length(plot.text.list)
 names(plot.text.list) <- df_title$doc_id
 
-searchString <- "serial killer"
+searchString <- "affair boyfriend princess"
 
 documents <- VectorSource(c(plot.text.list, searchString))
 documents$Names <- c(names(plot.text.list), "searchString")
@@ -26,7 +26,7 @@ cleanCorpus <- tm_map(cleanCorpus, stemDocument)
 cleanCorpus <- tm_map(cleanCorpus, removePunctuation)
 cleanCorpus <- tm_map(cleanCorpus, removeNumbers)
 
-dtm <- DocumentTermMatrix(cleanCorpus)
+dtm <- TermDocumentMatrix(cleanCorpus)
 
 dtm.tf_idf <- weightTfIdf(dtm)
 
@@ -43,14 +43,17 @@ for (i in 1:no.plot.text.list) {
 PageRank<-CosineCoeff[order(CosineCoeff,decreasing=TRUE)]
 RankedPages<-plot.text.list[order(CosineCoeff,decreasing=TRUE)]
 
-EuclCoeff<-0*(1:no.plot.text.list)
+View(PageRank)
+View(RankedPages)
 
-for (i in 1:no.plot.text.list) {
-  EuclCoeff[i]<-sum((Filt_m[i,]-Filt_m[8,])^2)^0.5
-}
+# EuclCoeff<-0*(1:no.plot.text.list)
 
-order(EuclCoeff)
-PageRank<-EuclCoeff[order(EuclCoeff)]
-RankedPages<-plot.text.list[order(EuclCoeff)]
-PageRank
-RankedPages
+# for (i in 1:no.plot.text.list) {
+#  EuclCoeff[i]<-sum((Filt_m[i,]-Filt_m[8,])^2)^0.5
+#}
+
+# order(EuclCoeff)
+# PageRank<-EuclCoeff[order(EuclCoeff)]
+# RankedPages<-plot.text.list[order(EuclCoeff)]
+# View(PageRank)
+# View(RankedPages)
