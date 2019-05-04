@@ -16,7 +16,7 @@ noPlotList <- length(plotList)
 names(plotList) <- df_title$doc_id
 
 # Search String
-query <- "killer"
+query <- "serial killer"
 
 # Creating Corpus
 # Here we are adding the query to the corpus or the plots itself
@@ -74,3 +74,5 @@ results <- data.frame(doc=names(plotList), score = t(scores), text=unlist(plotLi
 # Ordering in decreasin order of cosine score
 results <- results[order(results$score, decreasing = TRUE), ]
 View(results[1:10, ])
+
+
